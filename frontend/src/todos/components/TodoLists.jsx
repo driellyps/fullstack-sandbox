@@ -10,23 +10,13 @@ import {
 } from '@mui/material'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import { TodoListForm } from './TodoListForm'
+import { api } from '../../services/api'
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const getPersonalTodos = () => {
   return sleep(1000).then(() =>
-    Promise.resolve({
-      '0000000001': {
-        id: '0000000001',
-        title: 'First List',
-        todos: ['First todo of first list!'],
-      },
-      '0000000002': {
-        id: '0000000002',
-        title: 'Second List',
-        todos: ['First todo of second list!'],
-      },
-    })
+    api.getTodos()
   )
 }
 
@@ -50,7 +40,10 @@ export const TodoLists = ({ style }) => {
                 <ListItemIcon>
                   <ReceiptIcon />
                 </ListItemIcon>
-                <ListItemText primary={todoLists[key].title} />
+                <ListItemText 
+                  primary={todoLists[key].title} 
+                  secondary={todoLists[key].todos.every(task => task.completed) ? 'All done ✅' : ''} 
+                />
               </ListItem>
             ))}
           </List>
@@ -60,12 +53,13 @@ export const TodoLists = ({ style }) => {
         <TodoListForm
           key={activeList} // use key to make React recreate component to reset internal state
           todoList={todoLists[activeList]}
-          saveTodoList={(id, { todos }) => {
+          saveTodoList={(id, todos) => {
             const listToUpdate = todoLists[id]
             setTodoLists({
               ...todoLists,
               [id]: { ...listToUpdate, todos },
             })
+            api.updateTodoList(id, todos)
           }}
         />
       )}
