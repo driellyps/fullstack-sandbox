@@ -9,21 +9,22 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
   const [todos, setTodos] = useState(todoList.todos)
   const [isSaving, setIsSaving] = useState(false)
 
-  useEffect(() => {
-   saveUpdatedList()
-  }, [todos])
-
   const handleSubmit = (event) => {
     event.preventDefault()
-    saveUpdatedList()
-  }
-
-  const saveUpdatedList = () => {
     sleep(1000).then(() => {
       saveTodoList(todoList.id, todos)
       setIsSaving(false)
-    })
+    }) 
   }
+
+  useEffect(() => {
+    if (isSaving) {
+      sleep(1000).then(() => {
+        saveTodoList(todoList.id, todos)
+        setIsSaving(false)
+      })
+    }
+  }, [isSaving, todos, saveTodoList, todoList.id])
 
   return (
     <Card sx={{ margin: '0 1rem' }}>
