@@ -43,7 +43,7 @@ If you feel constrained by time (which is totally fine!), prioritize quality ove
 - [x] Don't require users to press save when an item is added/edited in the todo list. (Autosave functionality)
 - [x] Make it possible to indicate that a todo is completed.
 - [x] Indicate that a todo list is completed if all todo items within are completed.
-- [] Add a date for completion to todo items. Indicate how much time is remaining or overdue.
+- [ ] Add a date for completion to todo items. Indicate how much time is remaining or overdue.
 
 ## Submission
 Before submitting, read through all changes one last time - code quality matters!
